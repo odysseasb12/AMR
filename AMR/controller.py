@@ -1,12 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt 
 wind_active = False # Select whether you want to activate wind or not
 group_number = 24  # Enter your group number here
 
-error_x_list = []
-error_y_list = []
-error_a_list = []
-dt_list = []
 
 class Update():
     y = 0
@@ -63,30 +58,7 @@ def controller(state, target_pos, dt):
     Update.a = error_a*dt + Update.a
     Update.prev_error_a = error_a
 
-    time = np.arange(0,15,0.015)
-
-
-    global error_x_list, error_a_list, error_y_list, dt_list
-    error_x_list.append(error_x)
-    error_y_list.append(error_y)
-    error_a_list.append(error_a)
-    dt_list.append(dt)
-
-    if len(error_x_list) == len(time):
-        plt.plot(time,error_x_list, label='x')
-        #plt.plot(time,error_y_list, label='y')
-        #plt.plot(time,error_a_list, label='a')
-        plt.xlabel('Time (s)')
-        plt.ylabel('Error in x (m)')
-        plt.title('Error in X vs Time')
-        #plt.ylabel('Error in y (m)')
-        #plt.title('Error in Y vs Time')
-        #plt.ylabel('Error in Attitude a (radians)')
-        #plt.title('Error in Attitude vs Time')
-        plt.legend()
-        plt.show() 
-
-
+    # Calculating the velocities by applying the control inputs and accounting for throttle mixing
     u_1 = control_input_y - control_input_x - control_input_a
     u_2 = control_input_y + control_input_x + control_input_a
 
